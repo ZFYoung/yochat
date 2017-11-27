@@ -21,5 +21,9 @@ class AccountManager: NSObject {
     func isLogin() -> Bool {
         return currUser==nil
     }
+    
+    func getCurrUser() -> UserModel? {
+        return self.currUser;
+    }
 
 }

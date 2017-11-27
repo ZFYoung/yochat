@@ -24,6 +24,7 @@
 		04FD50481FC9B850007D7C0C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD503B1FC9B84F007D7C0C /* LoginViewController.swift */; };
 		04FD50491FC9B850007D7C0C /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD503C1FC9B84F007D7C0C /* MasterViewController.swift */; };
 		04FD504C1FC9B9C4007D7C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04FD504A1FC9B9C4007D7C0C /* Main.storyboard */; };
+		04FD504E1FCC6390007D7C0C /* TypeTransfor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD504D1FCC6390007D7C0C /* TypeTransfor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		04FD503B1FC9B84F007D7C0C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		04FD503C1FC9B84F007D7C0C /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		04FD504B1FC9B9C4007D7C0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04FD504D1FCC6390007D7C0C /* TypeTransfor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTransfor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				04FD50311FC9B84F007D7C0C /* MessageModel.swift */,
 				04FD50321FC9B84F007D7C0C /* Socket.swift */,
 				04FD50331FC9B84F007D7C0C /* UserModel.swift */,
+				04FD504D1FCC6390007D7C0C /* TypeTransfor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				04FD50411FC9B850007D7C0C /* Socket.swift in Sources */,
 				04FD503E1FC9B850007D7C0C /* AccountManager.swift in Sources */,
 				04FD50481FC9B850007D7C0C /* LoginViewController.swift in Sources */,
+				04FD504E1FCC6390007D7C0C /* TypeTransfor.swift in Sources */,
 				04FD50491FC9B850007D7C0C /* MasterViewController.swift in Sources */,
 				04FD50421FC9B850007D7C0C /* UserModel.swift in Sources */,
 				04FD50401FC9B850007D7C0C /* MessageModel.swift in Sources */,

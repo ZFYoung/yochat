@@ -13,8 +13,6 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     @IBOutlet weak var msgTableView: NSTableView!
     @IBOutlet weak var msgTextField: NSTextField!
     @IBOutlet weak var btnSendMsg: NSButton!
-    var FROMID = 1;
-    var TOID = 2;
     
     var messages:NSMutableArray?
     var sClient:Socket?
@@ -29,7 +27,7 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     }
     
     override func viewWillAppear() {
-//        self.checkIsLogin();
+        self.checkIsLogin();
     }
     
     /**
@@ -38,7 +36,10 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     @IBAction func btnSendMsgClicked(_ sender: Any) {
         let msg:String = msgTextField.stringValue;
         if msg.count > 0 {
-            let newmsg = MessageModel.init(fromID: FROMID, toID: TOID, content: msg, image: "", messageType: .Text)
+            
+            let FROMID = AccountManager.shareInstance.getCurrUser()?.uid;
+            let TOID = FROMID == 1 ? 2 : 1;
+            let newmsg = MessageModel.init(fromID: FROMID!, toID: TOID, content: msg, image: "", messageType: .Text)
             
             self.sendMessage(msg: newmsg);
             self.save_add_appendNewMessage(msgmodel: newmsg);

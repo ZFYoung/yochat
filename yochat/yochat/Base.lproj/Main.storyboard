@@ -884,6 +884,7 @@
                         <outlet property="btnSendMsg" destination="iUh-z6-4cl" id="PxI-3j-dOD"/>
                         <outlet property="msgTableView" destination="4FL-p3-Job" id="Gx7-NP-TrX"/>
                         <outlet property="msgTextField" destination="8XO-ng-ltw" id="2jK-2j-agr"/>
+                        <segue destination="F5N-J5-xOY" kind="sheet" identifier="gotoLogin" id="Q4c-w5-XOF"/>
                     </connections>
                 </viewController>
                 <customObject id="me3-np-nW1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

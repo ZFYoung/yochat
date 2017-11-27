@@ -23,9 +23,11 @@ class UserModel: NSObject {
     }
     
     init(dic:NSDictionary) {
-        self.uid = dic.value(forKey: "UID") as! Int;
-        self.name = dic.value(forKey: "NAME") as! String;
-        self.password = dic.value(forKey: "PASSWORD") as! String;
+        self.uid = TypeTransfor.STRTOINT(str: dic.value(forKey: "USERID") as! String);
+        self.name = dic.value(forKey: "USERNAME") as! String;
+        if let pwd = dic.value(forKey: "USERPWD") {
+            self.password = pwd as! String;
+        }
         self.avatar = dic.value(forKey: "AVATAR") as! String;
     }
     
