@@ -11,7 +11,6 @@
 		04FD50051FC9B80B007D7C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04FD50041FC9B80B007D7C0C /* Assets.xcassets */; };
 		04FD50141FC9B80C007D7C0C /* yochatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD50131FC9B80C007D7C0C /* yochatTests.swift */; };
 		04FD501F1FC9B80C007D7C0C /* yochatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD501E1FC9B80C007D7C0C /* yochatUITests.swift */; };
-		04FD502D1FC9B842007D7C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04FD502C1FC9B842007D7C0C /* Main.storyboard */; };
 		04FD503E1FC9B850007D7C0C /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD502F1FC9B84F007D7C0C /* AccountManager.swift */; };
 		04FD503F1FC9B850007D7C0C /* CFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD50301FC9B84F007D7C0C /* CFileManager.swift */; };
 		04FD50401FC9B850007D7C0C /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD50311FC9B84F007D7C0C /* MessageModel.swift */; };
@@ -25,6 +24,9 @@
 		04FD50491FC9B850007D7C0C /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD503C1FC9B84F007D7C0C /* MasterViewController.swift */; };
 		04FD504C1FC9B9C4007D7C0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04FD504A1FC9B9C4007D7C0C /* Main.storyboard */; };
 		04FD504E1FCC6390007D7C0C /* TypeTransfor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD504D1FCC6390007D7C0C /* TypeTransfor.swift */; };
+		04FD50501FCD9BC1007D7C0C /* BaseWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD504F1FCD9BC1007D7C0C /* BaseWindow.swift */; };
+		04FD50521FCDA3E3007D7C0C /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD50511FCDA3E3007D7C0C /* NetWorkManager.swift */; };
+		04FD50541FCDB735007D7C0C /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FD50531FCDB735007D7C0C /* Kingfisher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +58,6 @@
 		04FD501A1FC9B80C007D7C0C /* yochatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yochatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FD501E1FC9B80C007D7C0C /* yochatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yochatUITests.swift; sourceTree = "<group>"; };
 		04FD50201FC9B80C007D7C0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04FD502C1FC9B842007D7C0C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		04FD502F1FC9B84F007D7C0C /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		04FD50301FC9B84F007D7C0C /* CFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CFileManager.swift; sourceTree = "<group>"; };
 		04FD50311FC9B84F007D7C0C /* MessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -70,6 +71,9 @@
 		04FD503C1FC9B84F007D7C0C /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		04FD504B1FC9B9C4007D7C0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04FD504D1FCC6390007D7C0C /* TypeTransfor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTransfor.swift; sourceTree = "<group>"; };
+		04FD504F1FCD9BC1007D7C0C /* BaseWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWindow.swift; sourceTree = "<group>"; };
+		04FD50511FCDA3E3007D7C0C /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
+		04FD50531FCDB735007D7C0C /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FD50541FCDB735007D7C0C /* Kingfisher.framework in Frameworks */,
 				04FD50461FC9B850007D7C0C /* SwiftSocket.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,7 +131,6 @@
 				04FD50341FC9B84F007D7C0C /* Resouce */,
 				04FD503D1FC9B84F007D7C0C /* View */,
 				04FD50001FC9B80B007D7C0C /* AppDelegate.swift */,
-				04FD502C1FC9B842007D7C0C /* Main.storyboard */,
 				04FD504A1FC9B9C4007D7C0C /* Main.storyboard */,
 				04FD50041FC9B80B007D7C0C /* Assets.xcassets */,
 				04FD50091FC9B80B007D7C0C /* Info.plist */,
@@ -160,6 +164,7 @@
 				04FD50301FC9B84F007D7C0C /* CFileManager.swift */,
 				04FD50311FC9B84F007D7C0C /* MessageModel.swift */,
 				04FD50321FC9B84F007D7C0C /* Socket.swift */,
+				04FD50511FCDA3E3007D7C0C /* NetWorkManager.swift */,
 				04FD50331FC9B84F007D7C0C /* UserModel.swift */,
 				04FD504D1FCC6390007D7C0C /* TypeTransfor.swift */,
 			);
@@ -172,6 +177,7 @@
 				04FD50351FC9B84F007D7C0C /* bugimage.png */,
 				04FD50361FC9B84F007D7C0C /* smile.png */,
 				04FD50371FC9B84F007D7C0C /* smile256.png */,
+				04FD50531FCDB735007D7C0C /* Kingfisher.framework */,
 				04FD50381FC9B84F007D7C0C /* SwiftSocket.framework */,
 			);
 			path = Resouce;
@@ -182,6 +188,7 @@
 			children = (
 				04FD503B1FC9B84F007D7C0C /* LoginViewController.swift */,
 				04FD503C1FC9B84F007D7C0C /* MasterViewController.swift */,
+				04FD504F1FCD9BC1007D7C0C /* BaseWindow.swift */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -305,7 +312,6 @@
 				04FD50451FC9B850007D7C0C /* smile256.png in Resources */,
 				04FD504C1FC9B9C4007D7C0C /* Main.storyboard in Resources */,
 				04FD50441FC9B850007D7C0C /* smile.png in Resources */,
-				04FD502D1FC9B842007D7C0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,9 +336,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FD50501FCD9BC1007D7C0C /* BaseWindow.swift in Sources */,
 				04FD50011FC9B80B007D7C0C /* AppDelegate.swift in Sources */,
 				04FD503F1FC9B850007D7C0C /* CFileManager.swift in Sources */,
 				04FD50411FC9B850007D7C0C /* Socket.swift in Sources */,
+				04FD50521FCDA3E3007D7C0C /* NetWorkManager.swift in Sources */,
 				04FD503E1FC9B850007D7C0C /* AccountManager.swift in Sources */,
 				04FD50481FC9B850007D7C0C /* LoginViewController.swift in Sources */,
 				04FD504E1FCC6390007D7C0C /* TypeTransfor.swift in Sources */,

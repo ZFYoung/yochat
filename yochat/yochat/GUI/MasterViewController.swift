@@ -7,27 +7,34 @@
 //
 
 import Cocoa
+import Kingfisher
 
 class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDelegate {
     
     @IBOutlet weak var msgTableView: NSTableView!
+    @IBOutlet weak var friendTableView: NSTableView!
     @IBOutlet weak var msgTextField: NSTextField!
     @IBOutlet weak var btnSendMsg: NSButton!
     
     var messages:NSMutableArray?
+    var friends:NSMutableArray?
     var sClient:Socket?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         messages = NSMutableArray.init();
+        friends = NSMutableArray.init();
         self.processClient();
         self.loadLocalMessages();
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadRemoteFriendList), name: NSNotification.Name.init("LOGINSUCCESSFUL"), object: nil);
         
     }
     
     override func viewWillAppear() {
         self.checkIsLogin();
+        
     }
     
     /**
@@ -65,6 +72,28 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     func loadLocalMessages() -> Void {
         messages = NSMutableArray.init(array: CFileManager.shareInstance.readLocalMessage());
         self.msgTableView.reloadData();
+    }
+    
+    @objc func loadRemoteFriendList() -> Void {
+        let friurl = "http://192.168.2.200:3000/getallusers"
+        NetWorkManager.requestWithUrl(urlStr: friurl, method: "GET", param: nil, timeout: 4) { (data, respomse, error) in
+            if data != nil {
+                let retDic:NSDictionary = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+                let isRight = retDic.value(forKey: "retCode") as! String;
+                if isRight == "1" {
+                    let userInfo = retDic.value(forKey: "ALLUSERS") as! String
+                    self.friends!.removeAllObjects();
+                    let alluser:NSArray = TypeTransfor.convertToDictionary(text: userInfo) as! NSArray;
+                    for userDic in alluser {
+                        let currUser = UserModel.init(dic: userDic as! NSDictionary);
+                        self.friends!.add(currUser);
+                        DispatchQueue.main.async {
+                            self.friendTableView.reloadData();
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func appendTableNewMessage(message:MessageModel) -> Void {
@@ -114,12 +143,18 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
             cellView.textField?.stringValue = msg.content;
             return cellView;
         }
+        else if (tableColumn!.identifier.rawValue == "FriendColum"){
+            let user:UserModel = self.friends!.object(at: row) as! UserModel;
+            let url = URL(string: user.avatar)
+            cellView.imageView!.kf.setImage(with: url)
+            cellView.textField!.stringValue = user.name;
+            return cellView;
+        }
         return cellView;
-        
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return messages != nil ? messages!.count : 0;
+        return tableView ==  msgTableView ? (messages != nil ? messages!.count : 0) : (friends != nil ? friends!.count : 0);
     }
     
 }

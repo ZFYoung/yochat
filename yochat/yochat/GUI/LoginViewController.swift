@@ -61,24 +61,22 @@ class LoginViewController: NSViewController {
     func closeLoginView() -> Void {
         self.dismissViewController(self);
     }
+    
     func processLogin(uid:String,upwd:String) -> Void {
-        let url:URL = URL.init(string: LOGINURL)!;
         let param:Dictionary = ["uid":uid,"upwd":upwd];
-        var urlreq = URLRequest.init(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 4);
-        urlreq.httpMethod = "POST";
-        urlreq.httpBody = try! JSONSerialization.data(withJSONObject: param, options: .prettyPrinted);
-        urlreq.setValue("application/json", forHTTPHeaderField: "Content-Type");
-        
-        let task = URLSession.shared.dataTask(with: urlreq) { (data, response, error) in
+        NetWorkManager.requestWithUrl(urlStr: LOGINURL, method: "POST", param: param, timeout: 4) { (data, response, error) in
             if data != nil {
                 let retDic:NSDictionary = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                 let isRight = retDic.value(forKey: "retCode") as! String;
                 if isRight == "1" {
                     let userInfo = retDic.value(forKey: "USER") as! String
                     let userDic = TypeTransfor.convertToDictionary(text: userInfo);
-                    let currUser = UserModel.init(dic: userDic! as NSDictionary);
+                    let currUser = UserModel.init(dic: userDic! as! NSDictionary);
                     AccountManager.shareInstance.setCurrUser(usr: currUser);
-                    self.closeLoginView();
+                    DispatchQueue.main.async {
+                        self.closeLoginView();
+                        NotificationCenter.default.post(name: Notification.Name.init("LOGINSUCCESSFUL"), object: nil);
+                    }
                 }
             }
             else {
@@ -86,8 +84,8 @@ class LoginViewController: NSViewController {
                     self.showTip(msg: "登陆失败！");
                 }
             }
-        }
+        };
         
-        task.resume();
+        
     }
 }

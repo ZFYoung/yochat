@@ -52,6 +52,7 @@ class Socket: NSObject {
                     print("connected")
                     
                     while true {
+                        sleep(1);
                         if let msg = readmsg() {
                             DispatchQueue.main.async {
                                 processMessag(msg: msg, backItem: backItem)
