@@ -12,15 +12,15 @@ class CFileManager: NSObject {
     
     static let shareInstance = CFileManager()
     let fm = FileManager();
-    let SUBPATH:String = "/yochat/data/msgs/messages.dat"
+    let SUBPATH:String = "/yochat/data/msgs/"
     
     private override init() {
         super.init();
         self.isDocumentExist()
     }
     
-    func readLocalMessage() -> [MessageModel] {
-        let realPath = self.realPath();
+    func readLocalMessage(filename:String) -> [MessageModel] {
+        let realPath = self.realPath(filename: filename);
         if self.isFileExist(path: realPath) {
             let ary:[MessageModel] = NSKeyedUnarchiver.unarchiveObject(withFile: realPath) as! [MessageModel];
             return ary;
@@ -30,26 +30,26 @@ class CFileManager: NSObject {
         }
     }
     
-    func saveMessageToLocal(message:MessageModel!) -> Void {
-        let ary:NSMutableArray = NSMutableArray.init(array: self.readLocalMessage());
+    func saveMessageToLocal(filename:String, message:MessageModel!) -> Void {
+        let ary:NSMutableArray = NSMutableArray.init(array: self.readLocalMessage(filename: filename));
         ary.add(message);
-        NSKeyedArchiver.archiveRootObject(ary.copy(), toFile: self.realPath());
+        NSKeyedArchiver.archiveRootObject(ary.copy(), toFile: self.realPath(filename: filename));
     }
     
     func isFileExist(path:String) -> Bool {
-        return self.fm.fileExists(atPath:self.realPath());
+        return self.fm.fileExists(atPath:path);
     }
     
     func isDocumentExist() -> Void {
-        let docStr = (self.realPath() as NSString).deletingLastPathComponent;
+        let docStr = (self.realPath(filename: "") as NSString).deletingLastPathComponent;
         if fm.fileExists(atPath: docStr) == false {
             try! fm.createDirectory(atPath: docStr, withIntermediateDirectories: true, attributes: nil);
         }
     }
     
-    func realPath() -> String {
+    func realPath(filename:String) -> String {
         let baseStr = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first;
-        return baseStr! + SUBPATH;
+        return baseStr! + SUBPATH + filename;
     }
 
 }

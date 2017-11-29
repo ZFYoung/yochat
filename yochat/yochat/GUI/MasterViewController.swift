@@ -9,6 +9,11 @@
 import Cocoa
 import Kingfisher
 
+public enum GetFileType:Int {
+    case Read
+    case Receive
+}
+
 class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDelegate {
     
     @IBOutlet weak var msgTableView: NSTableView!
@@ -19,6 +24,9 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     var messages:NSMutableArray?
     var friends:NSMutableArray?
     var sClient:Socket?
+    var alert:NSAlert?
+    
+    var currPartner:UserModel? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +53,15 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         if msg.count > 0 {
             
             let FROMID = AccountManager.shareInstance.getCurrUser()?.uid;
-            let TOID = FROMID == 1 ? 2 : 1;
-            let newmsg = MessageModel.init(fromID: FROMID!, toID: TOID, content: msg, image: "", messageType: .Text)
+            let TOID = currPartner?.uid;
+            let newmsg = MessageModel.init(fromID: FROMID!, toID: TOID!, content: msg, image: "", messageType: .Text)
             
             self.sendMessage(msg: newmsg);
-            self.save_add_appendNewMessage(msgmodel: newmsg);
+            
+            self.messages!.add(newmsg);
+            self.appendTableNewMessage(message: newmsg);
+            let filename = self.getFileName(type: .Read, msgmodel: nil);
+            CFileManager.shareInstance.saveMessageToLocal(filename: filename, message: newmsg);
         }
         
         self.msgTextField.stringValue = "";
@@ -70,8 +82,12 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     }
     
     func loadLocalMessages() -> Void {
-        messages = NSMutableArray.init(array: CFileManager.shareInstance.readLocalMessage());
-        self.msgTableView.reloadData();
+        
+        if (AccountManager.shareInstance.getCurrUser() != nil && currPartner != nil) {
+            let filename = self.getFileName(type: .Read, msgmodel: nil);
+            messages = NSMutableArray.init(array: CFileManager.shareInstance.readLocalMessage(filename: filename));
+            self.msgTableView.reloadData();
+        }
     }
     
     @objc func loadRemoteFriendList() -> Void {
@@ -99,16 +115,8 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     func appendTableNewMessage(message:MessageModel) -> Void {
         self.msgTableView.beginUpdates();
         self.msgTableView.insertRows(at: IndexSet.init(integer: self.messages!.count-1), withAnimation: .effectGap);
-        self.msgTableView.scrollRowToVisible(self.messages!.count-1);
+        self.msgTableView.scrollRowToVisible(self.messages!.count);
         self.msgTableView.endUpdates();
-    }
-    
-    func save_add_appendNewMessage(msgmodel:MessageModel) -> Void {
-        
-        self.messages?.add(msgmodel);
-        self.appendTableNewMessage(message: msgmodel);
-        CFileManager.shareInstance.saveMessageToLocal(message: msgmodel);
-
     }
     
     func sendMessage(msg:MessageModel) -> Void {
@@ -121,13 +129,49 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
 
         let msgmodel = MessageModel.init(dic: msg)
         print("RECEIVE DATA FROM: \(msgmodel.fromId)")
-        self.save_add_appendNewMessage(msgmodel: msgmodel);
+        
+        if msgmodel.fromId == currPartner?.uid {
+            self.messages?.add(msgmodel);
+            self.appendTableNewMessage(message: msgmodel);
+        }
+        let filename = self.getFileName(type: .Receive, msgmodel: msgmodel)
+        CFileManager.shareInstance.saveMessageToLocal(filename: filename, message: msgmodel);
+
     }
     
     func checkIsLogin() -> Void {
         if (AccountManager.shareInstance.isLogin()) {
             self.performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "gotoLogin"), sender: self);
         }
+    }
+    
+    func getFileName(type:GetFileType, msgmodel:MessageModel?) -> String {
+        switch type {
+        case .Read:
+            return AccountManager.shareInstance.getCurrUser()!.uid.description + currPartner!.uid.description + "message.dat";
+        case .Receive:
+            return msgmodel!.toId.description + msgmodel!.fromId.description + "message.dat"
+        }
+    }
+    
+    func showTip(msg:String) -> Void {
+        if alert == nil {
+            alert = NSAlert.init();
+            alert!.addButton(withTitle: "OK");
+        }
+        alert!.messageText = msg;
+        alert!.beginSheetModal(for: self.view.window!, completionHandler: { (modalResponse) in
+        })
+    }
+    
+    func getUserInfoWithUid(uid:Int) -> UserModel? {
+        for user in friends! {
+            let usermo:UserModel = user as! UserModel;
+            if usermo.uid == uid {
+                return usermo;
+            }
+        }
+        return nil;
     }
     
     /**
@@ -139,14 +183,17 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         
         if (tableColumn!.identifier.rawValue == "MsgColumn") {
             let msg:MessageModel = self.messages!.object(at: row) as! MessageModel;
-            cellView.imageView?.image = NSImage.init(named: NSImage.Name(rawValue: "bugimage"));
+            
+            let fromUser:UserModel = self.getUserInfoWithUid(uid: msg.fromId)!
+            let url = URL(string: fromUser.avatar)
+            cellView.imageView!.kf.setImage(with: url);
             cellView.textField?.stringValue = msg.content;
             return cellView;
         }
         else if (tableColumn!.identifier.rawValue == "FriendColum"){
             let user:UserModel = self.friends!.object(at: row) as! UserModel;
             let url = URL(string: user.avatar)
-            cellView.imageView!.kf.setImage(with: url)
+            cellView.imageView!.kf.setImage(with: url);
             cellView.textField!.stringValue = user.name;
             return cellView;
         }
@@ -155,6 +202,33 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         return tableView ==  msgTableView ? (messages != nil ? messages!.count : 0) : (friends != nil ? friends!.count : 0);
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        if tableView == friendTableView {
+            currPartner = (friends!.object(at: row) as! UserModel);
+            self.loadLocalMessages()
+        }
+        
+        return true;
+    }
+    
+    func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
+        if friendTableView.selectedRow < 0 {
+            self.showTip(msg: "请选择用户~");
+            msgTextField.stringValue = "";
+            return false;
+        }
+        return true;
+    }
+    
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+            self.btnSendMsgClicked(btnSendMsg);
+            return true;
+        } else {
+            return false;
+        }
     }
     
 }
