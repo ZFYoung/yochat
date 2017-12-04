@@ -8,38 +8,45 @@
 
 import Cocoa
 
-class UserModel: NSObject {
+class UserModel: NSObject,NSCoding {
         
-    var uid:Int!;
+    var uid:String!;
     var avatar:String!;
     var name:String!;
     var password:String!;
+    var oneword:String!;
     
-    init(uid:Int, name:String, avatar:String, password:String) {
+    init(uid:String, name:String, avatar:String, password:String, oneword:String) {
         self.uid = uid;
         self.name = name;
         self.password = password;
         self.avatar = avatar;
+        self.oneword = oneword;
     }
     
     init(dic:NSDictionary) {
-        self.uid = TypeTransfor.STRTOINT(str: dic.value(forKey: "USERID") as! String);
-        self.name = dic.value(forKey: "USERNAME") as! String;
-        if let pwd = dic.value(forKey: "USERPWD") {
+        self.uid = dic.value(forKey: "_id") as! String;
+        self.name = dic.value(forKey: "username") as! String;
+        if let pwd = dic.value(forKey: "userpwd") {
             self.password = pwd as! String;
         }
-        self.avatar = dic.value(forKey: "AVATAR") as! String;
+        if let avatar = dic.value(forKey: "useravatar") {
+            self.avatar = avatar as! String;
+        }
+        if let oneword = dic.value(forKey: "useroneword") {
+            self.oneword = oneword as! String;
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.uid = aDecoder.decodeInteger(forKey: "S_UID");
+        self.uid = aDecoder.decodeObject(forKey: "S_UID") as! String;
         self.name = aDecoder.decodeObject(forKey: "S_NAME") as! String;
         self.password = aDecoder.decodeObject(forKey: "S_PASSWORD") as! String;
         self.avatar = aDecoder.decodeObject(forKey: "S_AVATAR") as! String;
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(Int(self.uid), forKey: "S_UID");
+        aCoder.encode(self.uid, forKey: "S_UID");
         aCoder.encode(self.name, forKey: "S_NAME");
         aCoder.encode(self.password, forKey: "S_PASSWORD");
         aCoder.encode(self.avatar, forKey: "S_AVATAR");

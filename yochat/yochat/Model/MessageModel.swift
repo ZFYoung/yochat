@@ -17,15 +17,15 @@ public enum MessageType:Int {
 
 class MessageModel: NSObject,NSCoding {
     
-    var fromId:Int!;
-    var toId:Int!;
+    var fromId:String!;
+    var toId:String!;
     var content:String!;
     var imageUrl:String!;
     var time:Int!;
     var msgType:MessageType!;
     
     
-    init(fromID:Int, toID:Int, content:String, image:String, messageType:MessageType) {
+    init(fromID:String, toID:String, content:String, image:String, messageType:MessageType) {
         self.fromId = fromID;
         self.toId = toID;
         self.content = content;
@@ -35,8 +35,8 @@ class MessageModel: NSObject,NSCoding {
     }
     
     init(dic:NSDictionary) {
-        self.fromId = TypeTransfor.STRTOINT(str: dic.value(forKey: "FROMID") as! String);
-        self.toId = TypeTransfor.STRTOINT(str: dic.value(forKey: "TOID") as! String);
+        self.fromId = dic.value(forKey: "FROMID") as! String;
+        self.toId = dic.value(forKey: "TOID") as! String;
         self.content = dic.value(forKey: "CONTENT") as! String;
         self.imageUrl = dic.value(forKey: "IMAGEURL") as! String;
         self.msgType = MessageType(rawValue: TypeTransfor.STRTOINT(str: dic.value(forKey: "MESSAGETYPE") as! String));
@@ -46,8 +46,8 @@ class MessageModel: NSObject,NSCoding {
     func transToDic() -> NSDictionary {
         let retDic = NSMutableDictionary.init();
         
-        retDic.setObject(TypeTransfor.INTTOSTR(iit: self.fromId), forKey: "FROMID" as NSCopying);
-        retDic.setObject(TypeTransfor.INTTOSTR(iit: self.toId), forKey: "TOID" as NSCopying);
+        retDic.setObject(self.fromId, forKey: "FROMID" as NSCopying);
+        retDic.setObject(self.toId, forKey: "TOID" as NSCopying);
         retDic.setObject(self.content, forKey: "CONTENT" as NSCopying);
         retDic.setObject(self.imageUrl, forKey: "IMAGEURL" as NSCopying);
         retDic.setObject(TypeTransfor.INTTOSTR(iit: self.msgType.rawValue), forKey: "MESSAGETYPE" as NSCopying);
@@ -57,8 +57,8 @@ class MessageModel: NSObject,NSCoding {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.fromId = aDecoder.decodeInteger(forKey: "S_FROMID");
-        self.toId = aDecoder.decodeInteger(forKey: "S_TOID");
+        self.fromId = aDecoder.decodeObject(forKey: "S_FROMID") as! String;
+        self.toId = aDecoder.decodeObject(forKey: "S_TOID") as! String;
         self.content = aDecoder.decodeObject(forKey: "S_CONTENT") as! String;
         self.imageUrl = aDecoder.decodeObject(forKey: "S_IMAGEURL") as! String;
         self.msgType = MessageType(rawValue: aDecoder.decodeInteger(forKey: "S_MSGTYPE"));
@@ -66,8 +66,8 @@ class MessageModel: NSObject,NSCoding {
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(Int(self.fromId), forKey: "S_FROMID");
-        aCoder.encode(Int(self.toId), forKey: "S_TOID");
+        aCoder.encode(self.fromId, forKey: "S_FROMID");
+        aCoder.encode(self.toId, forKey: "S_TOID");
         aCoder.encode(self.content, forKey: "S_CONTENT");
         aCoder.encode(self.imageUrl, forKey: "S_IMAGEURL");
         aCoder.encode(self.msgType.rawValue, forKey: "S_MSGTYPE");

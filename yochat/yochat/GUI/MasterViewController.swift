@@ -20,6 +20,7 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     @IBOutlet weak var friendTableView: NSTableView!
     @IBOutlet weak var msgTextField: NSTextField!
     @IBOutlet weak var btnSendMsg: NSButton!
+    @IBOutlet weak var btnConnect: NSButton!
     
     var messages:NSMutableArray?
     var friends:NSMutableArray?
@@ -37,6 +38,7 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         self.loadLocalMessages();
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadRemoteFriendList), name: NSNotification.Name.init("LOGINSUCCESSFUL"), object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(socketConnectResult(notifi:)), name: NSNotification.Name.init("SOCKCONNECTRESULT"), object: nil);
         
     }
     
@@ -52,9 +54,7 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         let msg:String = msgTextField.stringValue;
         if msg.count > 0 {
             
-            let FROMID = AccountManager.shareInstance.getCurrUser()?.uid;
-            let TOID = currPartner?.uid;
-            let newmsg = MessageModel.init(fromID: FROMID!, toID: TOID!, content: msg, image: "", messageType: .Text)
+            let newmsg = MessageModel.init(fromID: AccountManager.shareInstance.getCurrUser()!.uid, toID: currPartner!.uid, content: msg, image: "", messageType: .Text)
             
             self.sendMessage(msg: newmsg);
             
@@ -67,6 +67,9 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         self.msgTextField.stringValue = "";
     }
     
+    @IBAction func btnConnectClicked(_ sender: Any) {
+        self.processClient();
+    }
     
     /**
      Private
@@ -90,6 +93,9 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         }
     }
     
+    /**
+     Notification Functions
+     */
     @objc func loadRemoteFriendList() -> Void {
         let friurl = "http://192.168.2.200:3000/getallusers"
         NetWorkManager.requestWithUrl(urlStr: friurl, method: "GET", param: nil, timeout: 4) { (data, respomse, error) in
@@ -111,6 +117,21 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
             }
         }
     }
+    
+    @objc func socketConnectResult(notifi:Notification) -> Void {
+        let resDic = notifi.object as! Dictionary<String, String>;
+        let connstr = resDic["connresult"];
+        DispatchQueue.main.async {
+            if connstr == "1" {
+                self.btnConnect.title = "已连接"
+                self.btnConnect.isEnabled = false;
+            } else {
+                self.btnConnect.title = "未连接"
+                self.btnConnect.isEnabled = true;
+            }
+        }
+    }
+    
     
     func appendTableNewMessage(message:MessageModel) -> Void {
         self.msgTableView.beginUpdates();
@@ -148,9 +169,9 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
     func getFileName(type:GetFileType, msgmodel:MessageModel?) -> String {
         switch type {
         case .Read:
-            return AccountManager.shareInstance.getCurrUser()!.uid.description + currPartner!.uid.description + "message.dat";
+            return AccountManager.shareInstance.getCurrUser()!.uid + currPartner!.uid + "message.dat";
         case .Receive:
-            return msgmodel!.toId.description + msgmodel!.fromId.description + "message.dat"
+            return msgmodel!.toId + msgmodel!.fromId + "message.dat"
         }
     }
     
@@ -164,7 +185,7 @@ class MasterViewController: NSViewController,NSTableViewDataSource,NSTableViewDe
         })
     }
     
-    func getUserInfoWithUid(uid:Int) -> UserModel? {
+    func getUserInfoWithUid(uid:String) -> UserModel? {
         for user in friends! {
             let usermo:UserModel = user as! UserModel;
             if usermo.uid == uid {

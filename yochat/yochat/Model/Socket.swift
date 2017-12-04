@@ -49,26 +49,24 @@ class Socket: NSObject {
             let resu:SwiftSocket.Result = self.socketClient!.connect(timeout: timeout)
             switch resu {
                 case .success:
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SOCKCONNECTRESULT"), object: ["connresult":"1"])
                     print("connected")
-                    
                     while true {
-                        sleep(1);
+                        usleep(useconds_t(0.1))
                         if let msg = readmsg() {
                             DispatchQueue.main.async {
                                 processMessag(msg: msg, backItem: backItem)
                             }
                         } else {
                             DispatchQueue.main.async {
-                                //                            self.disconnect()
                             }
-                            //                        break;
                         }
                     }
-                
                 case .failure( _):
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SOCKCONNECTRESULT"), object: ["connresult":"0"])
                     print("connect failed");
                 }
-        }
+            }
     }
     
     func sendMessage(msg:NSDictionary) -> Void {

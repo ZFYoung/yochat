@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		047BADFB1FD5985C00D4BFCD /* connecting.png in Resources */ = {isa = PBXBuildFile; fileRef = 047BADFA1FD5985C00D4BFCD /* connecting.png */; };
 		04FD50011FC9B80B007D7C0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD50001FC9B80B007D7C0C /* AppDelegate.swift */; };
 		04FD50051FC9B80B007D7C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04FD50041FC9B80B007D7C0C /* Assets.xcassets */; };
 		04FD50141FC9B80C007D7C0C /* yochatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD50131FC9B80C007D7C0C /* yochatTests.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		047BADFA1FD5985C00D4BFCD /* connecting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connecting.png; sourceTree = "<group>"; };
 		04FD4FFD1FC9B80B007D7C0C /* yochat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yochat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FD50001FC9B80B007D7C0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04FD50041FC9B80B007D7C0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		04FD50341FC9B84F007D7C0C /* Resouce */ = {
 			isa = PBXGroup;
 			children = (
+				047BADFA1FD5985C00D4BFCD /* connecting.png */,
 				04FD50351FC9B84F007D7C0C /* bugimage.png */,
 				04FD50361FC9B84F007D7C0C /* smile.png */,
 				04FD50371FC9B84F007D7C0C /* smile256.png */,
@@ -307,6 +310,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				047BADFB1FD5985C00D4BFCD /* connecting.png in Resources */,
 				04FD50431FC9B850007D7C0C /* bugimage.png in Resources */,
 				04FD50051FC9B80B007D7C0C /* Assets.xcassets in Resources */,
 				04FD50451FC9B850007D7C0C /* smile256.png in Resources */,

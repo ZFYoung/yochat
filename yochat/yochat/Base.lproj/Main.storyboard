@@ -811,14 +811,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gM5-rI-kuo">
-                                <rect key="frame" x="0.0" y="0.0" width="172" height="645"/>
+                                <rect key="frame" x="0.0" y="0.0" width="172" height="616"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="jeF-ol-6GC">
-                                    <rect key="frame" x="1" y="1" width="170" height="643"/>
+                                    <rect key="frame" x="1" y="1" width="170" height="614"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="2ZK-jd-jmj">
-                                            <rect key="frame" x="0.0" y="0.0" width="170" height="643"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="170" height="614"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -881,14 +881,14 @@
                                 </scroller>
                             </scrollView>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odg-xy-HxI">
-                                <rect key="frame" x="172" y="133" width="440" height="512"/>
+                                <rect key="frame" x="172" y="133" width="440" height="483"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="VXf-Hb-YE0">
-                                    <rect key="frame" x="1" y="1" width="438" height="510"/>
+                                    <rect key="frame" x="1" y="1" width="438" height="481"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" viewBased="YES" id="4FL-p3-Job">
-                                            <rect key="frame" x="0.0" y="0.0" width="438" height="510"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="438" height="481"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -973,9 +973,21 @@
                                     <action selector="btnSendMsgClicked:" target="x2K-ra-nrJ" id="aAb-Xq-BNg"/>
                                 </connections>
                             </button>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OPh-8d-Llu">
+                                <rect key="frame" x="491" y="619" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" title="未连接" bezelStyle="shadowlessSquare" image="connecting" imagePosition="left" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yTm-oF-mw1">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="btnConnectClicked:" target="x2K-ra-nrJ" id="568-Ij-BJn"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="btnConnect" destination="OPh-8d-Llu" id="Hvq-DL-a8T"/>
                         <outlet property="btnSendMsg" destination="iUh-z6-4cl" id="PxI-3j-dOD"/>
                         <outlet property="friendTableView" destination="2ZK-jd-jmj" id="mIs-q3-Un1"/>
                         <outlet property="msgTableView" destination="4FL-p3-Job" id="Gx7-NP-TrX"/>
@@ -990,6 +1002,7 @@
     </scenes>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="connecting" width="200" height="200"/>
         <image name="smile" width="250" height="250"/>
     </resources>
 </document>

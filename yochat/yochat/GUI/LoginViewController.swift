@@ -63,7 +63,7 @@ class LoginViewController: NSViewController {
     }
     
     func processLogin(uid:String,upwd:String) -> Void {
-        let param:Dictionary = ["uid":uid,"upwd":upwd];
+        let param:Dictionary = ["uname":uid,"upwd":upwd];
         NetWorkManager.requestWithUrl(urlStr: LOGINURL, method: "POST", param: param, timeout: 4) { (data, response, error) in
             if data != nil {
                 let retDic:NSDictionary = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary

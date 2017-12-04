@@ -32,6 +32,7 @@ class CFileManager: NSObject {
     
     func saveMessageToLocal(filename:String, message:MessageModel!) -> Void {
         let ary:NSMutableArray = NSMutableArray.init(array: self.readLocalMessage(filename: filename));
+        
         ary.add(message);
         NSKeyedArchiver.archiveRootObject(ary.copy(), toFile: self.realPath(filename: filename));
     }
@@ -41,7 +42,7 @@ class CFileManager: NSObject {
     }
     
     func isDocumentExist() -> Void {
-        let docStr = (self.realPath(filename: "") as NSString).deletingLastPathComponent;
+        let docStr = self.realPath(filename: "");
         if fm.fileExists(atPath: docStr) == false {
             try! fm.createDirectory(atPath: docStr, withIntermediateDirectories: true, attributes: nil);
         }
